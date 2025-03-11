@@ -1,0 +1,63 @@
+
+.headingLogo {
+	display: flex;
+	flex-direcion: row;
+	align-items: flex-end;
+}
+.navMenu {
+	text-align: right;
+}
+
+.hBar {
+	display: flex;
+	flex-direction: row;
+	border: 3px solid black;
+	justify-content: space-between;
+}
+.fBar {
+	display: flex;
+	flex-direction: row;
+	border: 3px solid black;
+	justify-content: space-around;
+}
+
+.scInput {
+	display: flex;
+	flex-direction: row;
+}
+
+.down {
+	margin-top: 5px;
+}
+
+.linkColumn {
+	display: flex;
+	flex-direction: column;
+	border: 2px solid gray;
+	justify-content: space-around;
+	height: 325px;
+	text-align: center;
+}
+
+.bodyColumn {
+	height: 325px;
+	overflow: auto;
+	padding: 10px;
+}
+
+.productBody {
+	border-radius: 10px;
+	border: 1px solid black;
+	margin: 30px;
+}
+
+.productImg {
+	height: 125px;
+	width: 125px;
+	float: left;
+}
+
+.buyBtn {
+	float: right;
+	margin: 5px;
+}
