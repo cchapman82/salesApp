@@ -34,15 +34,24 @@ def runApp():
     print(productList)
     print()
     print(JSONproductList)
+    print()
     stringJSONproductList = str(JSONproductList)
     print(stringJSONproductList)
-    
+    print("rendering")
     return render_template('indexSalesTemplate.html', productList = JSONproductList)
-
+    print("enderd")
 
 @app.route("/cartTemplate.html")
 def goToCart():
     return render_template('cartTemplate.html')
+@app.route("/accountTemplate.html")
+def goToAccount():
+    return render_template('accountTemplate.html')
+@app.route("/indexSalesTemplate.html")
+def goToHome():
+    print("going home")
+    return render_template('indexSalesTemplate.html')
+
 
 def to_json(obj):
     return json.dumps(obj, separators=(",",":"), allow_nan=False, default=lambda obj: obj.__dict__)

@@ -32,10 +32,10 @@
 					<li class="nav-item active">
 						<a class="nav-link" href="indexSalesTemplate.html">Home<span class="sr-only">(current)</span></a>
 					</li>
-					<li class="nav-item">
+					<li class="nav-item active">
 						<a class="nav-link" href="cartTemplate.html">Cart</a>
 					</li>
-					<li class="nav-item">
+					<li class="nav-item active">
 						<a class="nav-link" href="accountTemplate.html">Account</a>
 					</li>
 				</ul>
@@ -81,7 +81,7 @@
 					</div>
 				</div>
 				<div class="col-8" id="productColumn">
-					<div class="bodyColumn" id="bodyColumn"></div>   
+					<div class="bodyColumn" id="bodyColumn"></div>    
 					 
 				</div>
 				<div class="col-2 linkColumn">
@@ -95,10 +95,5 @@
 			</div>
 		</div>
 		<script src="/static/salesTemplate.js"></script>
-		<script>
-			console.log('{{productList | tojson}}')
-			let productList = JSON.parse('{{productList | tojson}}')
-			console.log(productList)
-		</script>
 	</body>
 </html>
