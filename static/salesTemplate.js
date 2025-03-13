@@ -1,48 +1,24 @@
-/*
-class Product {
-	constructor(title, type, price, description) {
-		this.title=title;
-		this.type= type;
-		this.price= price;
-		this.description= description;
-	}
-}
-*/
+let productList = [];
+let cart = []
 let numItems = 0;
 const imgPath = "/static/raven.png";
-/*
-productList.push(
-	new Product("Bed", "bedroom", 300.00, "A bed."),
-	new Product("Glasses", "kitchen", 25.00, "Set of 4 glasses."),
-	new Product("Soap Dish", "bathroom", 10.00, "A soap dish"),
-	new Product("Computer", "computers", 1000.00, "A computer."),
-	new Product("Tablet", "tables", 500.00, "A tablet."),
-	new Product("Television", "televisions", 190.00, "A television."),
-	new Product("Meat", "meat", 25.00, "Beef"),
-	new Product("Vegetables", "vegetables", 5.00, "Some vegetables."),
-	new Product("Milk", "dairy", 6.00, "Some milk.")
-);
-*/
-/*
-const addToCart = (title) => {
-//	const product = productList.find(product => product.title === title);
-//	cart.push(product);
-//	numItems = cart.length;
-//	localStorage.setItem("cart", JSON.stringify(cart));
-	const xhttp = new XMLHttpRequest();
-	xttp.send(title);
-	xhttp.onreadystatechange = function() {
-		if (this.readyState == 4 && this.status == 200) {
-			const line = document.getElementById("cartNum");
-			line.innerHTML = "Cart " + xhttp.response ;
+
+const addToCart = (product) => {
+	cart.push(product);
+	numItems++;
+};
+
+const loadProducts = (str) => {
+	const newProductList = str.split("},");
+	for(let i = 0; i<newProductList.length; i++) {
+		if(newProductList[i].endsWith("}")) {
+			productList.push(JSON.parse(newProductList[i]))
+		} else {
+			productList.push(JSON.parse(newProductList[i]+ "}"));
 		}
 	}
-//	loadCartProducts();
-//	sendCart();
-};
-*/
-const loadProducts = () => {
-	console.log("loading");
+	let cartNum = document.getElementById('cartNum');
+	cartNum.innerHTML = numItems;
 	const body = document.getElementById("bodyColumn");
 	productList.forEach( product => {
 		const divElement = getProductBody(product);
@@ -51,13 +27,12 @@ const loadProducts = () => {
 
 };
 
-const loadCartProducts = () => {
-	
-	cart.forEach( product => {
-		const body = document.getElementById("bodyColumnC");
-		const divElement = getProductCartBody(product);
-		body.appendChild(divElement);
-	});
+const loadCartProduct = (product) => {
+	const body = document.getElementById("cartColumn");
+	const divElement = getCartBody(product);
+	const cartNum = document.getElementById('cartNum');
+	cartNum.innerHTML = numItems;
+	body.appendChild(divElement);
 };
 
 
@@ -77,7 +52,7 @@ const getProductBody = (product) => {
 	rowElement.appendChild(listColumn);
 	const buttonElement = document.createElement('button');
 	buttonElement.classList.add('buyBtn');
-	buttonElement.onclick = function(){ addToCart(product.title) };
+	buttonElement.onclick = function(){ addToCart(product) };
 	buttonElement.innerHTML = "Add to Cart"; 
 	const imgElement = document.createElement('img'); 
 	imgElement.classList.add('productImg');
@@ -91,25 +66,19 @@ const getProductBody = (product) => {
 };
 
 
-const getProductCartBody = (product) => {
+const getCartBody = (product) => {
 	
 	const divElement = document.createElement('div');
-	divElement.classList.add('productBody');
-	divElement.classList.add('grid');
-	const rowElement = document.createElement('div');
-	rowElement.classList.add('row');
-	divElement.appendChild(rowElement);
-	const picColumn = document.createElement('div');
-	picColumn.classList.add('col-2');
-	const listColumn = document.createElement('div');
-	listColumn.classList.add('col-10');
-	rowElement.appendChild(picColumn);
-	rowElement.appendChild(listColumn);
-	const imgElement = document.createElement('img'); 
-	imgElement.classList.add('productImg');
-	imgElement.src = imgPath;
-	picColumn.appendChild(imgElement);
-	listColumn.innerHTML = "<p>"  +  "</p>";
+	divElement.classList.add('cartColumn');
+	const pElement = document.createElement('p');
+	pElement.innerHTML = product.title;
+	divElement.appendChild(pElement);
+	const buttonElement = document.createElement('a');
+	buttonElement.href = "cartTemplate.html";
+	const btn = document.createElement('button');
+	btn.innerHTML("Go to Cart");
+	buttonElement.appendChild(btn);
+	divElement.appendChild(buttonElement);
 	return divElement;
 };
 
