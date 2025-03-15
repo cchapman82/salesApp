@@ -4,13 +4,15 @@ let numItems = 0;
 const imgPath = "/static/raven.png";
 
 const addToCart = (product) => {
+	console.log(product.title);
 	cart.push(product);
 	numItems++;
+	loadCartProduct(product);
 };
 
 const loadProducts = (str) => {
 	const newProductList = str.split("},");
-	for(let i = 0; i<newProductList.length; i++) {
+	for(let i = 0; i < newProductList.length; i++) {
 		if(newProductList[i].endsWith("}")) {
 			productList.push(JSON.parse(newProductList[i]))
 		} else {
@@ -31,8 +33,7 @@ const loadCartProduct = (product) => {
 	const body = document.getElementById("cartColumn");
 	const divElement = getCartBody(product);
 	const cartNum = document.getElementById('cartNum');
-	cartNum.innerHTML = numItems;
-	body.appendChild(divElement);
+	cartNum.innerHTML = "Items in cart : " + numItems;
 };
 
 
@@ -67,35 +68,30 @@ const getProductBody = (product) => {
 
 
 const getCartBody = (product) => {
-	
-	const divElement = document.createElement('div');
-	divElement.classList.add('cartColumn');
+	const cartList = document.getElementById("cartList")
 	const pElement = document.createElement('p');
 	pElement.innerHTML = product.title;
-	divElement.appendChild(pElement);
-	const buttonElement = document.createElement('a');
-	buttonElement.href = "cartTemplate.html";
-	const btn = document.createElement('button');
-	btn.innerHTML("Go to Cart");
-	buttonElement.appendChild(btn);
-	divElement.appendChild(buttonElement);
-	return divElement;
+	cartList.appendChild(pElement);
 };
 
 
 const sendCart = () => {
-	console.log("sending cart ");
-	localStorage.setItem("cart", JSON.stringify(cart));
-	window.location.href = "cartTemplate.html";
-	for(let i = 0; i < localStorage.length; i++) {
-		console.log(localStorage.getItem(localStorage.key(i)));
-	};
+	let result = "";
+	cart.forEach(product => {
+		result += product.title + ",";
+	})
+
+	result = result.slice(0, -1);
+	console.log(result);
+	$.ajax ({
+		url: '/process',
+		type : 'POST',
+		contentType: 'application/json',
+		data: JSON.stringify({result})
+	})
+
 };
 
-const getArray = (stringList) => {
-	console.log(stringList);
-	return stringList;
-};
 
 
 

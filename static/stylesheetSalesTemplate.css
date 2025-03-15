@@ -61,3 +61,8 @@
 	float: right;
 	margin: 5px;
 }
+
+#cartBtn {
+	background-color: blue;
+	color: black;
+}

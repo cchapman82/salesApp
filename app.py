@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 import json
 
 #takes on product and turns it into a json string
@@ -25,7 +25,7 @@ class Product :
 
 productList = []  
 JSONproductList = ""
-cart = []
+cart = ""
 numItems = 0
 
 productList.append( Product("Bed", "bedroom", 300.00, "A bed."))
@@ -48,10 +48,15 @@ app = Flask(__name__)
 @app.route("/")
 def runApp():
     return render_template('indexSalesTemplate.html', data = JSONproductList )
-
+@app.route('/process', methods = ['POST'])
+def getCartData() :
+     cart = request.get_json()
+     print(cart)
+     return "success"
 @app.route("/cartTemplate.html")
 def goToCart():
     return render_template('cartTemplate.html')
+
 @app.route("/accountTemplate.html")
 def goToAccount():
     return render_template('accountTemplate.html')
