@@ -19,8 +19,6 @@ const loadProducts = (str) => {
 			productList.push(JSON.parse(newProductList[i]+ "}"));
 		}
 	}
-	let cartNum = document.getElementById('cartNum');
-	cartNum.innerHTML = numItems;
 	const body = document.getElementById("bodyColumn");
 	productList.forEach( product => {
 		const divElement = getProductBody(product);

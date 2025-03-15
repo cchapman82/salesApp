@@ -25,8 +25,8 @@ class Product :
 
 productList = []  
 JSONproductList = ""
-cart = ""
-numItems = 0
+cartList = []
+JSONcartList = ""
 
 productList.append( Product("Bed", "bedroom", 300.00, "A bed."))
 productList.append( Product("Glasses", "kitchen", 25.00, "Set of four glasses."))
@@ -48,18 +48,27 @@ app = Flask(__name__)
 @app.route("/")
 def runApp():
     return render_template('indexSalesTemplate.html', data = JSONproductList )
+
 @app.route('/process', methods = ['POST'])
 def getCartData() :
-     cart = request.get_json()
-     print(cart)
-     return "success"
+    cart = request.get_json()
+    cart = cart["result"]
+    titles = cart.split(",")
+    for i in titles :
+         for z in productList :
+              if z.title == i :
+                   cartList.append(z)
+    JSONcartList = jsonify(cartList)
+    return "success"
+
 @app.route("/cartTemplate.html")
 def goToCart():
-    return render_template('cartTemplate.html')
+    return render_template('cartTemplate.html', data = JSONcartList)
 
 @app.route("/accountTemplate.html")
 def goToAccount():
     return render_template('accountTemplate.html')
+
 @app.route("/indexSalesTemplate.html")
 def goToHome():
     print("going home")

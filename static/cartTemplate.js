@@ -1,14 +1,17 @@
 
-const cart = JSON.parse(localStorage.getItem("cart"));
-const loadCartProducts = () => {
-	console.log("cart is " + cart);
+let cartP = [];
 
-        cart.forEach( product => {
-                const body = document.getElementById("cartProductBody");
-                const divElement = getProductCartBody(product)
-		body.appendChild(divElement);
-	});
-};
+const loadCartProducts = (str) => {
+        console.log(str);
+        const newProductList = str.split("},");
+	for(let i = 0; i < newProductList.length; i++) {
+		if(newProductList[i].endsWith("}")) {
+			cartP.push(JSON.parse(newProductList[i]))
+		} else {
+			cartP.push(JSON.parse(newProductList[i]+ "}"));
+		}
+        };
+}
 
 const getProductCartBody = (product) => {
 
@@ -32,5 +35,4 @@ const getProductCartBody = (product) => {
         return divElement;
 };
 
-console.log("hello");
 loadCartProducts();
